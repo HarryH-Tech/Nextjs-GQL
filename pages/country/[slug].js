@@ -1,7 +1,8 @@
-import { useLazyQuery, useQuery, gql } from "@apollo/client";
-import styles from "../../styles/Home.module.css";
-import Link from "next/Link";
-import { useEffect, useState } from "react";
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
+import { useQuery, gql } from "@apollo/client";
+
 import { useRouter } from "next/router";
 
 export default function Countries() {
@@ -44,10 +45,77 @@ export default function Countries() {
     return null;
   }
 
+  console.log(data.country);
+  const { name, capital, native, continent, languages } = data.country;
   return (
     <>
-      {data.country && <div>{data.country.name}</div>}
-      <button onClick={() => router.back()}>Back</button>
+      <button
+        css={css`
+          font-size: 1.2rem;
+          width: 3.5rem;
+          background-color: #4477ff;
+          border: 2px solid #447ff;
+          border-radius: 0.6rem;
+          cursor: pointer;
+          transition: all 0.5s;
+          margin: 1rem;
+
+          &:hover {
+            color: white;
+            transform: translateY(5px);
+          }
+        `}
+        onClick={() => router.back()}
+      >
+        &#8592;
+      </button>
+
+      {data.country && (
+        <div
+          css={css`
+            text-align: center;
+          `}
+        >
+          <h1
+            css={css`
+              font-weight: bold;
+            `}
+          >
+            {name}
+          </h1>
+
+          <div
+            css={css`
+              display: flex;
+              justify-content: center;
+              gap: 2rem;
+            `}
+          >
+            <div
+              css={css`
+                padding: 1rem;
+              `}
+            >
+              {capital && <h3>Capital City: {capital}</h3>}
+              <br />
+              {continent && <h3>Continent: {continent.name}</h3>}
+            </div>
+            <div
+              css={css`
+                padding: 1rem;
+              `}
+            >
+              {native && <h3>Native Name: {native}</h3>}
+              <br />
+              {languages.length > 0 && (
+                <h3>
+                  Languages: {languages.map((language) => language.name + ", ")}
+                </h3>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }
