@@ -4,7 +4,6 @@ import { useQuery, gql } from "@apollo/client";
 import { css } from "@emotion/react";
 import Link from "next/Link";
 import SearchBar from "./SearchBar";
-//import LoadingSpinner from "next/loading.gif";
 import Image from "next/image";
 
 const QUERY = gql`
@@ -48,7 +47,6 @@ export default function Countries() {
   const filterCountries = (countries, query) => {
     return countries.filter((country) => {
       const countryName = country.name.toLowerCase();
-      console.log(countryName.includes(query));
       return countryName.includes(query);
     });
   };
@@ -62,11 +60,7 @@ export default function Countries() {
           text-align: center;
         `}
       >
-        <SearchBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          filterCountries={filterCountries}
-        />
+        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         <div
           css={css`
             display: grid;
