@@ -62,6 +62,10 @@ export default function Countries() {
         <div
           css={css`
             text-align: center;
+            border: 2px solid #47f;
+            width: 70%;
+            margin: auto;
+            border-radius: 0.6rem;
           `}
         >
           <h1
@@ -71,25 +75,33 @@ export default function Countries() {
           >
             {name}
           </h1>
-          <br />
-          Countries within {name}:<br />
-          <ul
+
+          <div
             css={css`
-              text-align: justify;
+              border: 2px solid #fafafa;
+              padding: 1rem;
             `}
           >
-            {countries.map((country) => (
-              <li
-                key={country.name}
-                css={css`
-                  display: inline;
-                  list-style-type: none;
-                `}
-              >
-                {country.name},{" "}
-              </li>
-            ))}
-          </ul>
+            Countries within {name}:<br />
+            <ul
+              css={css`
+                text-align: justify;
+              `}
+            >
+              {countries.map((country, index) => (
+                <li
+                  key={country.name}
+                  css={css`
+                    display: inline;
+                    list-style-type: none;
+                  `}
+                >
+                  {country.name}
+                  {index === countries.length - 1 ? "." : ", "}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       )}
     </>

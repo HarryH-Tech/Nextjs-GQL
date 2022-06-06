@@ -14,9 +14,6 @@ function index() {
       continents {
         code
         name
-        countries {
-          name
-        }
       }
     }
   `;
@@ -65,7 +62,6 @@ function index() {
           css={css`
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
-            text-align: center;
           `}
         >
           {filteredContinents &&
@@ -94,25 +90,6 @@ function index() {
                     {continent.name}
                   </span>
                 </Link>
-                <br />
-                Countries within {continent.name}:<br />
-                <ul
-                  css={css`
-                    text-align: justify;
-                  `}
-                >
-                  {continent.countries.map((country) => (
-                    <li
-                      key={country.name}
-                      css={css`
-                        display: inline;
-                        list-style-type: none;
-                      `}
-                    >
-                      {country.name},{" "}
-                    </li>
-                  ))}
-                </ul>
               </div>
             ))}
         </div>

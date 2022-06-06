@@ -88,6 +88,7 @@ export default function Countries() {
             css={css`
               display: flex;
               justify-content: center;
+
               gap: 2rem;
             `}
           >
@@ -109,7 +110,13 @@ export default function Countries() {
               <br />
               {languages.length > 0 && (
                 <h3>
-                  Languages: {languages.map((language) => language.name + ", ")}
+                  Languages:{" "}
+                  {languages.map((language, index) => (
+                    <span>
+                      {language.name}
+                      {index === languages.length - 1 ? "." : ", "}
+                    </span>
+                  ))}
                 </h3>
               )}
             </div>
