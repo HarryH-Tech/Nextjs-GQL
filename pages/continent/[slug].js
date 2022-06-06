@@ -1,62 +1,44 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import { useQuery, gql } from "@apollo/client";
+import { BackButton, ImageContainer } from "../../styles/components";
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
+import { FETCH_CONTINENT_QUERY } from "../GQL";
+import Image from "next/image";
 
 export default function Countries() {
   const router = useRouter();
   const { slug } = router.query;
-
-  const QUERY = gql`
-    query Continent($code: ID!) {
-      continent(code: $code) {
-        code
-        name
-        countries {
-          name
-        }
-      }
-    }
-  `;
-
-  const { data, loading, error } = useQuery(QUERY, {
+  const { data, loading, error } = useQuery(FETCH_CONTINENT_QUERY, {
     variables: { code: slug },
   });
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <ImageContainer>
+        <Image
+          src={"/loading.gif"}
+          alt="Loading Spinner"
+          width="64"
+          height="64"
+        />
+      </ImageContainer>
+    );
   }
 
   if (error) {
-    console.error(error);
-    return null;
+    return (
+      <ErrorContainer>
+        Sorry there was a problem fetching the data, please try again.
+      </ErrorContainer>
+    );
   }
 
-  console.log(data);
   const { name, countries } = data.continent;
 
   return (
     <>
-      <button
-        css={css`
-          font-size: 1.2rem;
-          width: 3.5rem;
-          background-color: #4477ff;
-          border: 2px solid #447ff;
-          border-radius: 0.6rem;
-          cursor: pointer;
-          transition: all 0.5s;
-          margin: 1rem;
-
-          &:hover {
-            color: white;
-            transform: translateY(5px);
-          }
-        `}
-        onClick={() => router.back()}
-      >
-        &#8592;
-      </button>
+      <BackButton onClick={() => router.back()}>&#8592;</BackButton>
 
       {data.continent && (
         <div

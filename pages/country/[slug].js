@@ -1,74 +1,46 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-
-import { useQuery, gql } from "@apollo/client";
-
+import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
+import { BackButton } from "../../styles/components";
+import { FETCH_COUNTRY_QUERY } from "../GQL";
+import { ImageContainer } from "../../styles/components";
+import Image from "next/image";
 
 export default function Countries() {
   const router = useRouter();
   const { slug } = router.query;
 
-  const QUERY = gql`
-    query Country($code: ID!) {
-      country(code: $code) {
-        code
-        name
-        emoji
-        phone
-        native
-        continent {
-          name
-        }
-        capital
-        currency
-        languages {
-          name
-        }
-        states {
-          name
-        }
-      }
-    }
-  `;
-
-  const { data, loading, error } = useQuery(QUERY, {
+  const { data, loading, error } = useQuery(FETCH_COUNTRY_QUERY, {
     variables: { code: slug },
   });
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <ImageContainer>
+        <Image
+          src={"/loading.gif"}
+          alt="Loading Spinner"
+          width="64"
+          height="64"
+        />
+      </ImageContainer>
+    );
   }
 
   if (error) {
-    console.error(error);
-    return null;
+    return (
+      <ErrorContainer>
+        Sorry there was a problem fetching the data, please try again.
+      </ErrorContainer>
+    );
   }
 
-  console.log(data.country);
   const { name, capital, native, continent, languages } = data.country;
+
   return (
     <>
-      <button
-        css={css`
-          font-size: 1.2rem;
-          width: 3.5rem;
-          background-color: #4477ff;
-          border: 2px solid #447ff;
-          border-radius: 0.6rem;
-          cursor: pointer;
-          transition: all 0.5s;
-          margin: 1rem;
-
-          &:hover {
-            color: white;
-            transform: translateY(5px);
-          }
-        `}
-        onClick={() => router.back()}
-      >
-        &#8592;
-      </button>
+      <BackButton onClick={() => router.back()}>&#8592;</BackButton>
 
       {data.country && (
         <div
@@ -76,19 +48,12 @@ export default function Countries() {
             text-align: center;
           `}
         >
-          <h1
-            css={css`
-              font-weight: bold;
-            `}
-          >
-            {name}
-          </h1>
+          <h1>{name}</h1>
 
           <div
             css={css`
               display: flex;
               justify-content: center;
-
               gap: 2rem;
             `}
           >
@@ -112,7 +77,7 @@ export default function Countries() {
                 <h3>
                   Languages:{" "}
                   {languages.map((language, index) => (
-                    <span>
+                    <span key={index}>
                       {language.name}
                       {index === languages.length - 1 ? "." : ", "}
                     </span>

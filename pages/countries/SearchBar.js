@@ -1,5 +1,4 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { SearchBarContainer, SearchBarInput } from "../../styles/components";
 
 function SearchBar({ searchTerm, setSearchTerm }) {
   const handleChange = (e) => {
@@ -7,18 +6,13 @@ function SearchBar({ searchTerm, setSearchTerm }) {
   };
 
   return (
-    <>
-      <input
-        css={css`
-          border: 2px solid #ababff;
-          border-radius: 0.4rem;
-          padding: 0.4rem;
-        `}
+    <SearchBarContainer>
+      <SearchBarInput
         value={searchTerm}
         onChange={(e) => handleChange(e)}
         placeholder="Search..."
       />
-    </>
+    </SearchBarContainer>
   );
 }
 

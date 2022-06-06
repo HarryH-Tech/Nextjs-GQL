@@ -1,44 +1,40 @@
-/** @jsxImportSource @emotion/react */
 import { useState } from "react";
-import { css } from "@emotion/react";
 import SearchBar from "../countries/SearchBar";
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import Image from "next/image";
 import Link from "next/Link";
+import { FETCH_CONTINENTS_QUERY } from "../GQL";
+import {
+  ErrorContainer,
+  ImageContainer,
+  Grid,
+  ItemLink,
+  ItemContainer,
+} from "../../styles/components";
 
 function index() {
   const [searchTerm, setSearchTerm] = useState("");
-
-  const QUERY = gql`
-    query Continents {
-      continents {
-        code
-        name
-      }
-    }
-  `;
-
-  const { data, loading, error } = useQuery(QUERY);
+  const { data, loading, error } = useQuery(FETCH_CONTINENTS_QUERY);
 
   if (loading) {
     return (
-      <div
-        css={css`
-          text-align: center;
-        `}
-      >
+      <ImageContainer>
         <Image
           src={"/loading.gif"}
           alt="Loading Spinner"
           width="64"
           height="64"
         />
-      </div>
+      </ImageContainer>
     );
   }
 
   if (error) {
-    return null;
+    return (
+      <ErrorContainer>
+        Sorry there was a problem fetching the data, please try again.
+      </ErrorContainer>
+    );
   }
 
   const filterContinents = (continents, query) => {
@@ -49,51 +45,20 @@ function index() {
   };
 
   const filteredContinents = filterContinents(data.continents, searchTerm);
-  console.log(data);
+
   return (
     <>
-      <div
-        css={css`
-          text-align: center;
-        `}
-      >
-        <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <div
-          css={css`
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-          `}
-        >
-          {filteredContinents &&
-            filteredContinents.map((continent) => (
-              <div
-                key={continent.code}
-                css={css`
-                  border: 2px solid #ddd;
-                  border-radius: 0.4rem;
-                  margin: 0.5rem;
-                  background-color: #f1f1fa;
-                  padding: 0.4rem;
-                `}
-              >
-                <Link href={`/continent/${encodeURIComponent(continent.code)}`}>
-                  <span
-                    css={css`
-                      color: blue;
-                      cursor: pointer;
-                      transition: text-decoration 2s;
-                      &:hover {
-                        text-decoration: underline;
-                      }
-                    `}
-                  >
-                    {continent.name}
-                  </span>
-                </Link>
-              </div>
-            ))}
-        </div>
-      </div>
+      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <Grid>
+        {filteredContinents &&
+          filteredContinents.map((continent) => (
+            <ItemContainer key={continent.code}>
+              <Link href={`/continent/${encodeURIComponent(continent.code)}`}>
+                <ItemLink>{continent.name}</ItemLink>
+              </Link>
+            </ItemContainer>
+          ))}
+      </Grid>
     </>
   );
 }
