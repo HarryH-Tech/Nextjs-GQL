@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.6.6",
@@ -15,14 +16,20 @@
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "apollo-server-micro": "^3.8.1",
+    "cross-fetch": "^3.1.5",
     "graphql": "^16.5.0",
+    "jest-environment-jsdom": "^28.1.1",
     "micro": "^9.3.4",
     "next": "12.1.6",
     "react": "18.1.0",
-    "react-dom": "18.1.0"
+    "react-dom": "18.1.0",
+    "react-test-renderer": "^18.1.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.4",
+    "@testing-library/react": "^13.3.0",
     "eslint": "8.16.0",
-    "eslint-config-next": "12.1.6"
+    "eslint-config-next": "12.1.6",
+    "jest": "^28.1.1"
   }
 }

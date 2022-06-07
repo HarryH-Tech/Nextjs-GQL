@@ -1,6 +1,9 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import { BackButton, ImageContainer } from "../../styles/components";
+import {
+  BackButton,
+  ImageContainer,
+  ItemContainer,
+} from "../../styles/components";
+
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { FETCH_CONTINENT_QUERY } from "../GQL";
@@ -41,50 +44,18 @@ export default function Countries() {
       <BackButton onClick={() => router.back()}>&#8592;</BackButton>
 
       {data.continent && (
-        <div
-          css={css`
-            text-align: center;
-            border: 2px solid #47f;
-            width: 70%;
-            margin: auto;
-            border-radius: 0.6rem;
-          `}
-        >
-          <h1
-            css={css`
-              font-weight: bold;
-            `}
-          >
-            {name}
-          </h1>
+        <ItemContainer width="60%" margin="auto">
+          <h1>{name}</h1>
+          {countries && <h3>Countries within: {name}</h3>}
 
-          <div
-            css={css`
-              border: 2px solid #fafafa;
-              padding: 1rem;
-            `}
-          >
-            Countries within {name}:<br />
-            <ul
-              css={css`
-                text-align: justify;
-              `}
-            >
-              {countries.map((country, index) => (
-                <li
-                  key={country.name}
-                  css={css`
-                    display: inline;
-                    list-style-type: none;
-                  `}
-                >
-                  {country.name}
-                  {index === countries.length - 1 ? "." : ", "}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+          <br />
+          {countries.map((country, index) => (
+            <span key={country.name}>
+              {country.name}
+              {index === countries.length - 1 ? "." : ", "}
+            </span>
+          ))}
+        </ItemContainer>
       )}
     </>
   );

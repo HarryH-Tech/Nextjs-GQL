@@ -5,29 +5,31 @@ import { HomeContainer, HomeBox } from "../styles/components";
 export default function Home() {
   return (
     <>
-      <HomeContainer>
-        <Link href="/countries">
-          <HomeBox>
-            <h3> Countries</h3>
+      <HomeContainer data-testid="home-container">
+        <Link href="/countries" data-testid="countries-link">
+          <HomeBox data-testid="countries-box">
+            <h3 role="countries-title">Countries</h3>
             <br />
             <Image
               src={"/countries.jpg"}
               alt="Countries"
               width="300"
               height="200"
+              data-testid="countries-image"
             />
           </HomeBox>
         </Link>
 
-        <Link href="/continents">
-          <HomeBox>
-            <h3> Continents</h3>
+        <Link href="/continents" data-testid="continents-link">
+          <HomeBox data-testid="continents-box">
+            <h3 role="continents-title"> Continents</h3>
             <br />
             <Image
               src={"/continents.jpg"}
               alt="Continents"
               width="300"
               height="200"
+              data-testid="continents-image"
             />
           </HomeBox>
         </Link>

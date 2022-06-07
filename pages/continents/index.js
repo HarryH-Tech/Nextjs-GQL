@@ -52,7 +52,7 @@ function index() {
       <Grid>
         {filteredContinents &&
           filteredContinents.map((continent) => (
-            <ItemContainer key={continent.code}>
+            <ItemContainer key={continent.code} margin="0.5rem">
               <Link href={`/continent/${encodeURIComponent(continent.code)}`}>
                 <ItemLink>{continent.name}</ItemLink>
               </Link>

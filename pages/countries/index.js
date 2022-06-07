@@ -20,6 +20,7 @@ export default function Countries() {
     return (
       <ImageContainer>
         <Image
+          role="loading-spinner"
           src={"/loading.gif"}
           alt="Loading Spinner"
           width="64"
@@ -50,10 +51,14 @@ export default function Countries() {
     <>
       <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
 
-      <Grid>
+      <Grid role="grid">
         {filteredCountries &&
           filteredCountries.map((country) => (
-            <ItemContainer key={country.code}>
+            <ItemContainer
+              role="country-container"
+              key={country.code}
+              margin="0.5rem"
+            >
               <Link href={`/country/${encodeURIComponent(country.code)}`}>
                 <ItemLink>{country.name}</ItemLink>
               </Link>

@@ -1,5 +1,7 @@
 import styled from "@emotion/styled";
 
+const primaryBlack = "black";
+
 export const HomeContainer = styled.div`
   gap: 2rem;
   display: flex;
@@ -10,7 +12,7 @@ export const HomeContainer = styled.div`
 `;
 
 export const HomeBox = styled.div`
-  border: 2px solid #47f;
+  border: 2px solid ${primaryBlack};
   border-radius: 0.6rem;
   padding: 2rem;
   text-align: center;
@@ -34,14 +36,15 @@ export const StyledLink = styled.a`
 export const BackButton = styled.button`
   font-size: 1.2rem;
   width: 3.5rem;
-  background-color: #4a4fff;
+  background-color: ${primaryBlack};
   border-radius: 0.6rem;
   cursor: pointer;
   transition: all 0.5s;
   margin: 1rem;
-
+  color: white;
+  transition: all 0.3s;
   &:hover {
-    color: white;
+    transform: scale(1.1);
   }
 `;
 
@@ -61,7 +64,7 @@ export const ErrorContainer = styled.div`
 export const Header = styled.div`
   margin-bottom: 1rem;
   gap: 2rem;
-  background-color: #5588ff;
+  background-color: ${primaryBlack};
   padding: 0.5rem;
   white-space: nowrap;
   width: 100%;
@@ -70,13 +73,15 @@ export const Header = styled.div`
 export const ItemContainer = styled.div`
   border: 2px solid #ddd;
   border-radius: 0.4rem;
-  margin: 0.5rem;
+  text-align: center;
+  margin: ${(props) => props.margin};
   background-color: #f1f1fa;
   padding-top: 0.4rem;
+  width: ${(props) => props.width};
 `;
 
 export const SearchBarInput = styled.input`
-  border: 2px solid #ababff;
+  border: 2px solid ${primaryBlack};
   border-radius: 0.4rem;
   padding: 0.4rem;
   text-align: center;

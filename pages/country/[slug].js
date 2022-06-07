@@ -2,9 +2,12 @@
 import { css } from "@emotion/react";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
-import { BackButton } from "../../styles/components";
+import {
+  BackButton,
+  ImageContainer,
+  ItemContainer,
+} from "../../styles/components";
 import { FETCH_COUNTRY_QUERY } from "../GQL";
-import { ImageContainer } from "../../styles/components";
 import Image from "next/image";
 
 export default function Countries() {
@@ -43,50 +46,26 @@ export default function Countries() {
       <BackButton onClick={() => router.back()}>&#8592;</BackButton>
 
       {data.country && (
-        <div
-          css={css`
-            text-align: center;
-          `}
-        >
+        <ItemContainer width="60%" margin="auto">
           <h1>{name}</h1>
-
-          <div
-            css={css`
-              display: flex;
-              justify-content: center;
-              gap: 2rem;
-            `}
-          >
-            <div
-              css={css`
-                padding: 1rem;
-              `}
-            >
-              {capital && <h3>Capital City: {capital}</h3>}
-              <br />
-              {continent && <h3>Continent: {continent.name}</h3>}
-            </div>
-            <div
-              css={css`
-                padding: 1rem;
-              `}
-            >
-              {native && <h3>Native Name: {native}</h3>}
-              <br />
-              {languages.length > 0 && (
-                <h3>
-                  Languages:{" "}
-                  {languages.map((language, index) => (
-                    <span key={index}>
-                      {language.name}
-                      {index === languages.length - 1 ? "." : ", "}
-                    </span>
-                  ))}
-                </h3>
-              )}
-            </div>
-          </div>
-        </div>
+          {capital && <h3>Capital City: {capital}</h3>}
+          <br />
+          {continent && <h3>Continent: {continent.name}</h3>}
+          <br />
+          {native && <h3>Native Name: {native}</h3>}
+          <br />
+          {languages.length > 0 && (
+            <h3>
+              Languages:{" "}
+              {languages.map((language, index) => (
+                <span key={index}>
+                  {language.name}
+                  {index === languages.length - 1 ? "." : ", "}
+                </span>
+              ))}
+            </h3>
+          )}
+        </ItemContainer>
       )}
     </>
   );
