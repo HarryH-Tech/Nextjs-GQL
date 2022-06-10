@@ -16,20 +16,19 @@ export default function Country() {
   const { slug } = router ? router.query : "";
 
   const { data, loading, error } = useQuery(FETCH_COUNTRY_QUERY, {
-    variables: { code: slug },
+    variables: { code: "AD" },
   });
 
   if (loading) {
     return (
-      // <ImageContainer>
-      //   <Image
-      //     src={"/loading.gif"}
-      //     alt="Loading Spinner"
-      //     width="64"
-      //     height="64"
-      //   />
-      // </ImageContainer>
-      "LOADING"
+      <ImageContainer>
+        <Image
+          src={"/loading.gif"}
+          alt="Loading Spinner"
+          width="64"
+          height="64"
+        />
+      </ImageContainer>
     );
   }
 
@@ -46,12 +45,16 @@ export default function Country() {
 
   return (
     <>
-      <BackButton onClick={() => router.back()} aria-label="back-button">
+      <BackButton
+        onClick={() => router.back()}
+        aria-label="back-button"
+        role="back-button"
+      >
         &#8592;
       </BackButton>
 
       {data.country && (
-        <ItemContainer width="60%" margin="auto">
+        <ItemContainer width="60%" margin="auto" name="country-container">
           <h1>{name}</h1>
           {capital && <h3>Capital City: {capital}</h3>}
           <br />
@@ -74,6 +77,7 @@ export default function Country() {
               ))}
             </h3>
           )}
+          <p>Hi</p>
         </ItemContainer>
       )}
     </>
