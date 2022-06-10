@@ -1,8 +1,7 @@
 import Countries from "../pages/countries/index";
 import "@testing-library/jest-dom";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 
-import { ApolloProvider } from "@apollo/client";
 import client from "../apollo-client";
 
 import TestRenderer from "react-test-renderer";
@@ -44,14 +43,26 @@ describe("Countries", () => {
       </MockedProvider>
     );
 
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
     const tree = component.toJSON();
+    const grid = screen.findByRole("grid");
 
-    expect(tree.find("img"));
+    console.log(screen.findByRole("searchbar"));
+    //  expect(tree).toContain(grid);
+  });
+});
 
-    // const tree = component.toJSON();
-    // console.log(tree.children[0].children);
-    // console.log(component.root);
-    // const loadingSpinner = component.find("img");
-    // console.log(loadingSpinner);
+describe("LoadingSpinner", () => {
+  test('LoadingSpinner renders and must have  alt = "Loading Spinner..."', () => {
+    render(
+      <MockedProvider mocks={mocks} client={client} addTypename={false}>
+        <Countries />
+      </MockedProvider>
+    );
+    const loadingSpinner = screen.getByRole("loading-spinner");
+    // Next Image component loads the image lazily so src returns a base64 value rather than the src used in IDE
+    // expect(loadingSpinner).toHaveAttribute("src", "/loading.gif");
+    expect(loadingSpinner).toHaveAttribute("alt", "Loading Spinner...");
   });
 });

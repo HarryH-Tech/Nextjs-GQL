@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { fireEvent, render, screen } from "@testing-library/react";
 
 describe("Index", () => {
-  it("Renders Homepage", () => {
+  it("Renders Homepage with 2 boxes containing 'Continents'' and 'Countries' titles", () => {
     render(<Home />);
 
     expect(screen.getByTestId("home-container")).toBeInTheDocument();

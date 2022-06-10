@@ -11,6 +11,7 @@ function SearchBar({ searchTerm, setSearchTerm }) {
         value={searchTerm}
         onChange={(e) => handleChange(e)}
         placeholder="Search..."
+        type="text"
       />
     </SearchBarContainer>
   );

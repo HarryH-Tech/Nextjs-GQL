@@ -1,18 +1,19 @@
-/** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
 import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import {
   BackButton,
   ImageContainer,
   ItemContainer,
+  ErrorContainer,
 } from "../../styles/components";
 import { FETCH_COUNTRY_QUERY } from "../GQL";
 import Image from "next/image";
 
-export default function Countries() {
+export default function Country() {
   const router = useRouter();
-  const { slug } = router.query;
+
+  // Below line allows tests to pass but not necessary for page to load correctly
+  const { slug } = router ? router.query : "";
 
   const { data, loading, error } = useQuery(FETCH_COUNTRY_QUERY, {
     variables: { code: slug },
@@ -20,14 +21,15 @@ export default function Countries() {
 
   if (loading) {
     return (
-      <ImageContainer>
-        <Image
-          src={"/loading.gif"}
-          alt="Loading Spinner"
-          width="64"
-          height="64"
-        />
-      </ImageContainer>
+      // <ImageContainer>
+      //   <Image
+      //     src={"/loading.gif"}
+      //     alt="Loading Spinner"
+      //     width="64"
+      //     height="64"
+      //   />
+      // </ImageContainer>
+      "LOADING"
     );
   }
 
@@ -39,11 +41,14 @@ export default function Countries() {
     );
   }
 
-  const { name, capital, native, continent, languages } = data.country;
+  const { name, capital, native, continent, phone, currency, languages } =
+    data.country;
 
   return (
     <>
-      <BackButton onClick={() => router.back()}>&#8592;</BackButton>
+      <BackButton onClick={() => router.back()} aria-label="back-button">
+        &#8592;
+      </BackButton>
 
       {data.country && (
         <ItemContainer width="60%" margin="auto">
@@ -53,6 +58,10 @@ export default function Countries() {
           {continent && <h3>Continent: {continent.name}</h3>}
           <br />
           {native && <h3>Native Name: {native}</h3>}
+          <br />
+          {currency && <h3>Currency: {currency}</h3>}
+          <br />
+          {phone && <h3>Phone Code: {phone}</h3>}
           <br />
           {languages.length > 0 && (
             <h3>

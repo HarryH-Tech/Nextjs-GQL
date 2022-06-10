@@ -20,9 +20,10 @@ export default function Countries() {
     return (
       <ImageContainer>
         <Image
+          aria-label="loading-spinner"
           role="loading-spinner"
           src={"/loading.gif"}
-          alt="Loading Spinner"
+          alt="Loading Spinner..."
           width="64"
           height="64"
         />
@@ -49,7 +50,11 @@ export default function Countries() {
 
   return (
     <>
-      <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+      <SearchBar
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        role="searchbar"
+      />
 
       <Grid role="grid">
         {filteredCountries &&
