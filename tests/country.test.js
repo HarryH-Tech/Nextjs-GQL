@@ -1,15 +1,11 @@
 import "@testing-library/jest-dom";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-
-import { ApolloProvider } from "@apollo/client";
 import client from "../apollo-client";
 import Country from "../pages/country/[slug]";
 import TestRenderer from "react-test-renderer";
 import { FETCH_COUNTRY_QUERY } from "../pages/GQL";
 import { MockedProvider } from "@apollo/client/testing";
 import { act } from "react-dom/test-utils";
-import { useRouter } from "next/router";
-import userEvent from "@testing-library/user-event";
 
 const mocks = {
   request: {
@@ -68,30 +64,28 @@ it("Should render the back button and ensure the text content is set to a left a
   const backButton = screen.getByRole("back-button");
   expect(backButton).toBeInTheDocument();
   expect(backButton).toHaveTextContent("←");
-
-  const router = jest.spyOn(require("next/router"), "useRouter");
-
-  console.log(await userEvent.click(backButton));
-
-  // jest.mock("next/router", () => {
-  //   useRouter();
-  // });
 });
 
-// it("Should render list of countries", async () => {
-//   const component = TestRenderer.create(
-//     <MockedProvider mocks={[mocks]} client={client} addTypename={false}>
-//       <Country />
-//     </MockedProvider>
-//   );
+it("Should render list of countries", async () => {
+  render(
+    <MockedProvider mocks={[mocks]} client={client} addTypename={false}>
+      <Country />
+    </MockedProvider>
+  );
 
-//   await act(async () => {
-//     await new Promise((resolve) => setTimeout(resolve, 3000));
-//   });
+  await act(async () => {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+  });
 
-//   const countryContainer = component.root.findByType("div", {
-//     name: "country-container",
-//   });
-//   console.log(countryContainer);
-//   expect(countryContainer).toBeInTheDocument();
-// });
+  const countryContainer = screen.getByRole("country-container");
+  const countryName = screen.getByRole("country-name");
+
+  expect(countryContainer).toBeInTheDocument();
+  expect(countryName).toHaveTextContent("Andorra");
+
+  const captions = screen.getAllByRole("caption");
+  expect(captions.length).toEqual(5);
+
+  const languages = screen.getByRole("languages");
+  console.log(languages.children); // .pendingProps.children);
+});

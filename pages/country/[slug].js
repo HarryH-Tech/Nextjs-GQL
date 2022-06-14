@@ -54,20 +54,20 @@ export default function Country() {
       </BackButton>
 
       {data.country && (
-        <ItemContainer width="60%" margin="auto" name="country-container">
-          <h1>{name}</h1>
-          {capital && <h3>Capital City: {capital}</h3>}
+        <ItemContainer width="60%" margin="auto" role="country-container">
+          <h1 role="country-name">{name}</h1>
+          {capital && <h3 role="caption">Capital City: {capital}</h3>}
           <br />
-          {continent && <h3>Continent: {continent.name}</h3>}
+          {continent && <h3 role="caption">Continent: {continent.name}</h3>}
           <br />
-          {native && <h3>Native Name: {native}</h3>}
+          {native && <h3 role="caption">Native Name: {native}</h3>}
           <br />
-          {currency && <h3>Currency: {currency}</h3>}
+          {currency && <h3 role="caption">Currency: {currency}</h3>}
           <br />
-          {phone && <h3>Phone Code: {phone}</h3>}
+          {phone && <h3 role="caption">Phone Code: {phone}</h3>}
           <br />
-          {languages.length > 0 && (
-            <h3>
+          {languages.length > 0 ? (
+            <h3 role="languages">
               Languages:{" "}
               {languages.map((language, index) => (
                 <span key={index}>
@@ -76,8 +76,7 @@ export default function Country() {
                 </span>
               ))}
             </h3>
-          )}
-          <p>Hi</p>
+          ) : null}
         </ItemContainer>
       )}
     </>

@@ -47,9 +47,6 @@ describe("Countries", () => {
 
     const tree = component.toJSON();
     const grid = screen.findByRole("grid");
-
-    console.log(screen.findByRole("searchbar"));
-    //  expect(tree).toContain(grid);
   });
 });
 
